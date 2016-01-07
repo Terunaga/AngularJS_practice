@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ja" ng-app>
+  <head>
+    <meta charset="UTF-8">
+    <title>AngularJSの練習</title>
+    <script src="https://code.angularjs.org/angular-1.0.1.min.js"></script>
+    <script src="angular_practice.js"></script>
+  </head>
+  <body>
+    <h1>AngularJSの練習</h1>
+    <div ng-controller="main_controller">
+      <h2>文字を入力して下さい</h2>
+      <input type="text", ng-model="query">
+      <!-- <h1>{{query}}</h1> -->
+      <p>{{users.length}} users present overall.</p>
+      <ul>
+          <li ng-repeat="user in users|filter:query ">
+            {{user.name|uppercase}} {{user.score|number:2}}
+          </li>
+      </ul>
+      <p>My current pocket money: {{5000*500|currency}}</p>
+      <p>Today's date: {{today|date:'yyyy-MM-dd'}}</p>
+
+      <h2>Formの練習</h2>
+      <form novalidate name="myForm" ng-submit="addUser()">
+        <p>Name:
+          <input type="text" name="name" ng-model="user.name" required ng-minglength="5" ng-maxlength="10">
+          <span ng-show="myForm.name.$error.required">Required!</span>
+          <span ng-show="myForm.name.$error.minlength">Too short!</span>
+          <span ng-show="myForm.name.$error.maxlength">Too long!</span>
+        </p>
+        <p>Score:
+          <input type="number" name="score" ng-model="user.score">
+        </p>
+        <p>Email:
+          <input type="email" name="email" ng-model="user.email">
+          <span ng-show="myForm.email.$error.email">Not a valid email</span>
+        </p>
+
+        <p>Web:
+          <input type="url" name="url" ng-model="user.url">
+          <span ng-show="myForm.url.$error.url">Not a valid website</span>
+        </p>
+        <p>18+:<input type="checkbox" ng-model="user.adult" ng-true-value="adult" ng-false-value="child"></p>
+        <p>Phone:
+          <input type="radio" ng-model="user.phone" value="iPhone">iPhone
+          <input type="radio" ng-model="user.phone" value="Android">Android
+          <input type="radio" ng-model="user.phone" value="Yahoo">Yahoo
+        </p>
+        <p>Memo:
+          <textarea ng-model="user.memo" ng-maxlength="140"></textarea>{{140-user.memo.length}} words left
+        </p>
+        <p>Favorite Color:
+          <select ng-model="user.color" ng-options="color for color in ['red', 'blue', 'green']"></select>
+        </p>
+        <p><input type="submit" value="add"></p>
+      </form>
+      <pre>{{user|json}}</pre>
+    </div>
+  </body>
+</html>
